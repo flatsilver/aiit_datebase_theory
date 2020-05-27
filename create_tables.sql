@@ -31,16 +31,16 @@ VALUES
     (2, 'In Rainbows', '2007-10-7', 2, 3, 2)
 ;
 
-/* --- Create music table --- */
-DROP TABLE IF EXISTS music;
-CREATE TABLE music(
-    music_id INTEGER PRIMARY KEY,
+/* --- Create song table --- */
+DROP TABLE IF EXISTS song;
+CREATE TABLE song(
+    song_id INTEGER PRIMARY KEY,
     name TEXT,
     running_sec INTEGER,
     artist_id INTEGER
 );
 
-INSERT INTO music
+INSERT INTO song
 VALUES
     (1, 'Drive My Car', 148, 1),
     (2, 'Norwegian Wood (This Bird Has Flown)', 125, 1),
@@ -48,16 +48,16 @@ VALUES
     (4, 'Bodysnatchers', 242, 2)
 ;
 
-/* --- Create music_album table --- */
-DROP TABLE IF EXISTS music_album;
-CREATE TABLE music_album(
-    music_album_id INTEGER PRIMARY KEY,
-    music_id INTEGER,
+/* --- Create song_album table --- */
+DROP TABLE IF EXISTS song_album;
+CREATE TABLE song_album(
+    song_album_id INTEGER PRIMARY KEY,
+    song_id INTEGER,
     album_id INTEGER,
     music_order INTEGER
 );
 
-INSERT INTO music_album
+INSERT INTO song_album
 VALUES
     (1, 1, 1, 1),
     (2, 2, 1, 2),
