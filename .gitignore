@@ -1,4 +1,4 @@
 *.code-workspace
-^sqldiff$
-^sqlite3$
-^sqlite3_analyzer$
+sqldiff
+sqlite3
+sqlite3_analyzer
