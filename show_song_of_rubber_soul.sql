@@ -1,5 +1,4 @@
--- Rubber Soulの曲名を抽出する
--- SQLiteではテーブル名に AS を使えない？
+/* Rubber Soulの曲名を抽出する */
 SELECT album.name, song.name
 FROM song
     JOIN song_album

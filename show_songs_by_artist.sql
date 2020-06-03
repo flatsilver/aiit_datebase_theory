@@ -1,3 +1,4 @@
+/* アーティスト別に曲を表示させる */
 SELECT artist.name, song.name
 FROM artist
     JOIN song
