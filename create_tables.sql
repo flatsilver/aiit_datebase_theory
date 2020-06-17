@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS song;
 CREATE TABLE song(
     song_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
-    running_sec INTEGER,
+    running_sec REAL,
     artist_id INTEGER
 );
 
