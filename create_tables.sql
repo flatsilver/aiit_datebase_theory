@@ -1,8 +1,15 @@
-/* --- Create artist table --- */
+/* --- DROP TABLE --- */
+DROP TABLE IF EXISTS song_album;
+DROP TABLE IF EXISTS album;
+DROP TABLE IF EXISTS song;
 DROP TABLE IF EXISTS artist;
+DROP TABLE IF EXISTS label;
+DROP TABLE IF EXISTS genre;
+
+/* --- Create artist table --- */
 CREATE TABLE artist(
     artist_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
+    name TEXT NOT NULL,
     description TEXT,
     debut_year INTEGER
 );
@@ -14,30 +21,15 @@ VALUES
     ('The Who', 'The Who are an English rock band formed in London in 1964.', 1964)
 ;
 
-/* --- Create album table --- */
-DROP TABLE IF EXISTS album;
-CREATE TABLE album(
-    album_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    release_date TEXT,
-    artist_id INTEGER,
-    genre_id INTEGER,
-    label_id INTEGER
-);
-
-INSERT INTO album(name, release_date, artist_id, genre_id, label_id)
-VALUES
-    ('Rubber Soul', '1965-12-3', 1, 1, 1),
-    ('In Rainbows', '2007-10-7', 2, 3, 2)
-;
-
 /* --- Create song table --- */
-DROP TABLE IF EXISTS song;
 CREATE TABLE song(
     song_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     running_sec REAL,
-    artist_id INTEGER
+    artist_id INTEGER,
+    FOREIGN KEY (artist_id)
+      REFERENCES artist (artist_id)
+        ON DELETE SET NULL
 );
 
 INSERT INTO song(name, running_sec, artist_id)
@@ -48,25 +40,7 @@ VALUES
     ('Bodysnatchers', 242, 2)
 ;
 
-/* --- Create song_album table --- */
-DROP TABLE IF EXISTS song_album;
-CREATE TABLE song_album(
-    song_album_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    song_id INTEGER,
-    album_id INTEGER,
-    music_order INTEGER
-);
-
-INSERT INTO song_album(song_id, album_id, music_order)
-VALUES
-    (1, 1, 1),
-    (2, 1, 2),
-    (3, 2, 1),
-    (4, 2, 2)
-;
-
 /* --- Create label table --- */
-DROP TABLE IF EXISTS label;
 CREATE TABLE label(
     label_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT
@@ -79,7 +53,6 @@ VALUES
 ;
 
 /* --- Create genre table --- */
-DROP TABLE IF EXISTS genre;
 CREATE TABLE genre(
     genre_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT
@@ -90,4 +63,51 @@ VALUES
     ('Rock'),
     ('pop'),
     ('Art rock')
+;
+
+/* --- Create album table --- */
+CREATE TABLE album(
+    album_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    release_date TEXT,
+    artist_id INTEGER,
+    genre_id INTEGER,
+    label_id INTEGER,
+    FOREIGN KEY (artist_id)
+      REFERENCES artist (artist_id)
+        ON DELETE SET NULL,
+    FOREIGN KEY (genre_id)
+      REFERENCES genre (genre_id)
+        ON DELETE SET NULL,
+    FOREIGN KEY (label_id)
+      REFERENCES label (label_id)
+        ON DELETE SET NULL
+);
+
+INSERT INTO album(name, release_date, artist_id, genre_id, label_id)
+VALUES
+    ('Rubber Soul', '1965-12-3', 1, 1, 1),
+    ('In Rainbows', '2007-10-7', 2, 3, 2)
+;
+
+/* --- Create song_album table --- */
+CREATE TABLE song_album(
+    song_album_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    song_id INTEGER,
+    album_id INTEGER,
+    music_order INTEGER,
+    FOREIGN KEY (song_id)
+      REFERENCES song (song_id)
+        ON DELETE SET NULL,
+    FOREIGN KEY (album_id)
+      REFERENCES album (album_id)
+        ON DELETE SET NULL
+);
+
+INSERT INTO song_album(song_id, album_id, music_order)
+VALUES
+    (1, 1, 1),
+    (2, 1, 2),
+    (3, 2, 1),
+    (4, 2, 2)
 ;
